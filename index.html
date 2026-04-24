@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kinza Saleemi · Manual Layout Switcher + 3‑Phone Demo</title>
+  <style>
+    /* ---------- RESET & GLOBAL ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #5369a1 0%, #2e4885 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #8894bb;
+      min-height: 100vh;
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ===== PROFILE SECTION ===== */
+    .profile-card {
+      background: rgba(18, 25, 45, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+    }
+
+    .profile-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .avatar-area {
+      flex: 1 1 200px;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #f97316;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    }
+
+    .info-area {
+      flex: 3 1 320px;
+    }
+
+    .name {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFB347, #FF6B6B, #f97316);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      display: inline-block;
+      background: #f9731622;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #ffb347;
+      margin-bottom: 1rem;
+      border-left: 3px solid #f97316;
+    }
+
+    .bio {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #cbd5e6;
+      margin: 1rem 0;
+      padding-left: 0.75rem;
+      border-left: 3px solid #f97316;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 1.4rem 0;
+    }
+
+    .stat {
+      background: #0f172a;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .stat-number {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #ffb347;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .btn {
+      background: #f97316;
+      padding: 0.7rem 1.6rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      color: #0f172a;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #f97316;
+      color: #ffb347;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background: #ff8c42;
+      box-shadow: 0 8px 18px rgba(249,115,22,0.3);
+    }
+
+    /* ===== NAVBAR BASE (mobile-first: stack) ===== */
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      background: #0f172ad9;
+      backdrop-filter: blur(12px);
+      padding: 1rem 1.8rem;
+      border-radius: 80px;
+      margin-bottom: 1.8rem;
+      list-style: none;
+      border: 1px solid rgba(249,115,22,0.3);
+      transition: all 0.2s ease;
+    }
+
+    .nav-item {
+      list-style: none;
+    }
+
+    .nav-link {
+      display: block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 60px;
+      background: rgba(255,255,255,0.05);
+      color: #f1f5f9;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .nav-link:hover {
+      background: #f97316;
+      color: #0a0f1c;
+    }
+
+    /* Desktop default: side-by-side (auto via media query) */
+    @media (min-width: 768px) {
+      .navbar {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.6rem 2rem;
+      }
+      .navbar::before {
+        content: "⚡ KINZA SALEEMI ⚡";
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-right: auto;
+        background: linear-gradient(120deg, #ffb347, #f97316);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+      .nav-link {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* --- MANUAL OVERRIDE CLASSES (for layout toggle) --- */
+    /* Force stack layout (mobile) regardless of screen size */
+    .navbar.force-stack {
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+    }
+    .navbar.force-stack::before {
+      content: "⚡ KINZA SALEEMI ⚡" !important;
+      display: block !important;
+      margin-right: 0 !important;
+      text-align: center !important;
+      margin-bottom: 0.5rem !important;
+      background: linear-gradient(120deg, #ffb347, #f97316);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Force side-by-side layout (desktop) even on small screens */
+    .navbar.force-row {
+      flex-direction: row !important;
+      justify-content: flex-end !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+    }
+    .navbar.force-row::before {
+      content: "⚡ KINZA SALEEMI ⚡" !important;
+      display: inline !important;
+      margin-right: auto !important;
+      background: linear-gradient(120deg, #ffb347, #f97316);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .navbar.force-row .nav-link {
+      padding: 0.5rem 1.2rem;
+    }
+
+    /* ===== FLOATING BUTTONS (side panel) ===== */
+    .side-buttons {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1000;
+    }
+
+    .side-btn {
+      background: #f97316;
+      border: none;
+      color: #0f172a;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 60px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: 0.2s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .side-btn:hover {
+      transform: scale(1.03);
+      background: #ff8c42;
+      box-shadow: 0 12px 24px rgba(249,115,22,0.4);
+    }
+
+    /* Layout toggle button specific */
+    .layout-btn {
+      background: #1c49ac;
+      color: rgb(235, 171, 171);
+    }
+    .layout-btn:hover {
+      background: #3b4e7a;
+    }
+
+    /* 3‑PHONE SHOWCASE (hidden by default) */
+    .phone-showcase {
+      display: none;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .phone-showcase.open {
+      display: block;
+    }
+
+    .showcase-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 1rem 0 1.5rem 0;
+      text-align: center;
+      background: linear-gradient(135deg, #ffb347, #ff6b6b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .phone-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .phone-frame {
+      background: #011030;
+      border-radius: 2.5rem;
+      padding: 1rem 0.6rem;
+      box-shadow: 0 25px 35px -12px black;
+      width: 100%;
+      max-width: 340px;
+      border: 1px solid rgba(249,115,22,0.4);
+      transition: transform 0.2s;
+    }
+
+    .phone-frame:hover {
+      transform: translateY(-6px);
+    }
+
+    .phone-notch {
+      width: 140px;
+      height: 24px;
+      background: #0f0f1c;
+      margin: -0.5rem auto 0.8rem auto;
+      border-radius: 20px;
+    }
+
+    .phone-screen {
+      background: #0a0f1c;
+      border-radius: 2rem;
+      overflow-y: auto;
+      max-height: 560px;
+      padding: 0.8rem;
+    }
+
+    .mini-profile {
+      background: #04021d;
+      border-radius: 1.5rem;
+      padding: 1rem;
+    }
+
+    .mini-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: #3a378a;
+      border-radius: 2rem;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      list-style: none;
+    }
+
+    .nav-link-mini {
+      display: block;
+      background: #69568f;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      color: rgb(71, 49, 49);
+      font-size: 0.8rem;
+    }
+
+    .mini-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin: 0 auto 0.6rem;
+      border: 2px solid #f97316;
+      object-fit: cover;
+    }
+
+    .mini-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffb347;
+      text-align: center;
+    }
+
+    .mini-bio {
+      font-size: 0.7rem;
+      color: #cbd5e1;
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+
+    @media (max-width: 780px) {
+      .phone-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .side-buttons {
+        right: 16px;
+        bottom: 16px;
+      }
+      .side-btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+      }
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      padding: 2rem 0 1rem;
+      color: #7e8aa2;
+      border-top: 1px solid #1e293b;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="main-container">
+  <!-- NAVBAR (responsive + manual override) -->
+  <ul id="mainNavbar" class="navbar">
+    <li class="nav-item"><a href="#" class="nav-link">🏠 Home</a></li>
+    <li class="nav-item"><a href="#" class="nav-link">📄 About Kinza</a></li>
+    <li class="nav-item"><a href="#" class="nav-link">🚀 Work</a></li>
+    <li class="nav-item"><a href="#" class="nav-link">📞 Connect</a></li>
+  </ul>
+
+  <!-- MAIN PROFILE (Kinza Saleemi) with REAL PICTURE -->
+  <div class="profile-card">
+    <div class="profile-inner">
+      <div class="avatar-area">
+        <img class="avatar" 
+             src="https://randomuser.me/api/portraits/women/68.jpg"
+             alt="Kinza Saleemi portrait"
+             onerror="this.src='https://ui-avatars.com/api/?background=f97316&color=fff&bold=true&size=170&name=Kinza+Saleemi&length=6&fontsize=0.6&rounded=true'">
+      </div>
+      <div class="info-area">
+        <h1 class="name">Kinza Saleemi</h1>
+        <div class="tagline">✦ UI/UX Architect · Frontend Alchemist ✦</div>
+        <p class="bio">
+          I'm Kinza — I craft interfaces that breathe on any device. Specialized in resilient layouts, 
+          responsive design systems, and turning complexity into elegant, accessible experiences. 
+          Currently exploring motion design & cross-device harmony.
+        </p>
+        <div class="stats">
+          <div class="stat"><div class="stat-number">74+</div><div class="stat-label">Projects</div></div>
+          <div class="stat"><div class="stat-number">⭐ 4.9</div><div class="stat-label">Rating</div></div>
+          <div class="stat"><div class="stat-number">🌍 18</div><div class="stat-label">Countries</div></div>
+        </div>
+        <div class="btn-group">
+          <a href="#" class="btn">✉️ Hire Kinza</a>
+          <a href="#" class="btn btn-outline">📁 Case Studies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3‑PHONE SHOWCASE (hidden by default, opens via side button) -->
+  <div id="phoneShowcase" class="phone-showcase">
+    <div class="showcase-title">📱 3‑Phone Layout Demo · Navbar stacks on every phone</div>
+    <div class="phone-grid">
+      <!-- Phone 1: Small -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="mini-profile">
+            <ul class="mini-nav">
+              <li><a href="#" class="nav-link-mini">🏠 Home</a></li>
+              <li><a href="#" class="nav-link-mini">👤 Profile</a></li>
+              <li><a href="#" class="nav-link-mini">💡 Projects</a></li>
+              <li><a href="#" class="nav-link-mini">📞 Contact</a></li>
+            </ul>
+            <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Kinza mini">
+            <div class="mini-name">Kinza Saleemi</div>
+            <div class="mini-bio">📱 Small phone (320px) – navbar stacks perfectly.</div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top: 8px; font-size:0.7rem; color:#ffb347;">📲 iPhone SE · 320px</div>
+      </div>
+
+      <!-- Phone 2: Medium -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="mini-profile">
+            <ul class="mini-nav">
+              <li><a href="#" class="nav-link-mini">🏠 Home</a></li>
+              <li><a href="#" class="nav-link-mini">👤 Profile</a></li>
+              <li><a href="#" class="nav-link-mini">💡 Projects</a></li>
+              <li><a href="#" class="nav-link-mini">📞 Contact</a></li>
+            </ul>
+            <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Kinza mid">
+            <div class="mini-name">Kinza Saleemi</div>
+            <div class="mini-bio">📱 Medium phone (375px) – clean vertical navbar.</div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top: 8px; font-size:0.7rem; color:#ffb347;">📲 Pixel 6 · 375px</div>
+      </div>
+
+      <!-- Phone 3: Large -->
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="mini-profile">
+            <ul class="mini-nav">
+              <li><a href="#" class="nav-link-mini">🏠 Home</a></li>
+              <li><a href="#" class="nav-link-mini">👤 Profile</a></li>
+              <li><a href="#" class="nav-link-mini">💡 Projects</a></li>
+              <li><a href="#" class="nav-link-mini">📞 Contact</a></li>
+            </ul>
+            <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Kinza large">
+            <div class="mini-name">Kinza Saleemi</div>
+            <div class="mini-bio">📱 Large phone (428px) – same stacking, bold colors.</div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top: 8px; font-size:0.7rem; color:#ffb347;">📲 iPhone 15 Pro Max · 428px</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ✅ Navbar stacks on mobile · side‑by‑side on desktop (auto) — but you can manually change it using the side button!<br>
+    🔘 Use the <strong>🖱️ Toggle Layout</strong> button to force stack (mobile) or side‑by‑side (desktop) manually.<br>
+    📱 The 3‑phone demo opens only when you click the orange button — it does not auto‑load.
+  </div>
+</div>
+
+<!-- FLOATING BUTTONS (side panel) -->
+<div class="side-buttons">
+  <button id="toggleLayoutBtn" class="side-btn layout-btn">🖱️ Toggle Layout: Stack ↔ Side</button>
+  <button id="togglePhonesBtn" class="side-btn">📱 Show 3‑Phone Demo</button>
+</div>
+
+<script>
+  const navbar = document.getElementById('mainNavbar');
+  const layoutBtn = document.getElementById('toggleLayoutBtn');
+  const phonesBtn = document.getElementById('togglePhonesBtn');
+  const showcase = document.getElementById('phoneShowcase');
+
+  // State for manual layout override (0 = auto/responsive, 1 = force stack, 2 = force row)
+  let layoutMode = 0; // 0: auto (default responsive), 1: stack, 2: side-by-side
+
+  function updateLayout() {
+    // Remove any existing manual classes
+    navbar.classList.remove('force-stack', 'force-row');
+    if (layoutMode === 1) {
+      navbar.classList.add('force-stack');
+      layoutBtn.innerHTML = '🖱️ Toggle Layout: Switch to Side-by-Side';
+    } else if (layoutMode === 2) {
+      navbar.classList.add('force-row');
+      layoutBtn.innerHTML = '🖱️ Toggle Layout: Switch to Stack';
+    } else {
+      // Auto mode: rely on CSS media query
+      layoutBtn.innerHTML = '🖱️ Toggle Layout: Force Stack';
+    }
+  }
+
+  layoutBtn.addEventListener('click', () => {
+    // cycle through modes: 0 -> 1 -> 2 -> 0 ...
+    layoutMode = (layoutMode + 1) % 3;
+    updateLayout();
+  });
+
+  // Toggle phone showcase
+  phonesBtn.addEventListener('click', () => {
+    showcase.classList.toggle('open');
+    if (showcase.classList.contains('open')) {
+      phonesBtn.innerHTML = '❌ Hide 3‑Phone Demo';
+    } else {
+      phonesBtn.innerHTML = '📱 Show 3‑Phone Demo';
+    }
+  });
+
+  // Initial setup
+  updateLayout();
+</script>
+</body>
+</html>
